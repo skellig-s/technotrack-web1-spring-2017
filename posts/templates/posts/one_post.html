@@ -1,0 +1,26 @@
+{% extends 'core/base.html' %}
+
+{% block title %} Просмотр поста {% endblock %}
+
+{% block content %}
+    <h2><a href="{% url "blogs:one_blog" pk=object.blog.id%}">Blog's page</a> </h2>
+    <p>Title: {{ object.title }}</p>
+    <p>Content: {{ object.content }}</p>
+    <p>created by {{ object.author }}, at {{ object.created_at }}</p>
+    <p>updated at {{ object.updated_at }}</p>
+
+
+        <div>
+        <h3>Comments:</h3>
+        {% for comment in object.comment_set.all %}
+            <div>{{ comment.description }}
+                <h5><i>created by {{ comment.author }}, at {{ comment.created_at }}</i><br/>
+                <i>rated {{ comment.rate }}</i></h5>
+            </div>
+        {% empty %}
+            <i>No comments</i>
+        {% endfor %}
+        </div>
+
+
+{% endblock %}

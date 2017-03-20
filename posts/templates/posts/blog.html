@@ -1,0 +1,22 @@
+{% extends 'core/base.html' %}
+
+{% block title %} Просмотр блога {% endblock %}
+
+{% block content %}
+    <h2><a href="{% url "blogs:blog_list" %}">All blogs</a> </h2>
+    <p>Title: {{ object.title }}</p>
+    <p>Description: {{ object.description }}</p>
+    <p><i>by {{ object.author }}</i></p>
+
+{#    {% if object.post_set.all %}#}
+        <div>
+        <h3>Posts:</h3>
+        {% for post in object.post_set.all %}
+            <div><i><a href="{% url "blogs:one_post" blog_id=post.blog.id pk=post.id %}">{{ post.title }}</a></i></div>
+        {% empty %}
+            No posts yet
+        {% endfor %}
+        </div>
+{#    {% endif %}#}
+
+{% endblock %}

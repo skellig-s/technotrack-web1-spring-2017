@@ -1,0 +1,28 @@
+{% extends 'core/base.html' %}
+{% load widget_tweaks %}
+
+{% block navigate %}
+    <li><a href="{% url "home" %}">Главная</a></li>
+    <li ><a href={% url "blogs:blog_list" %}>Блоги</a></li>
+    <li class="active">Блог: {{ object.title }}</li>
+{% endblock %}
+
+{% block content %}
+    <form method="post" class="form-horizontal">
+        {% csrf_token %}
+         {% if form.errors %}
+            {{ form.errors }}
+        {% endif %}
+        {% for field in form %}
+        <div class="form-group">
+            <label class="col-sm-2 control-label">{{ field.label }}</label>
+            <div class="col-md-8">
+                {{ field|add_class:"form-control" }}
+            </div>
+        </div>
+        {% endfor %}
+    <div class="container">
+        <input type="submit" class="btn btn-default" value="Сохранить изменения" >
+    </div>
+    </form>
+{% endblock %}

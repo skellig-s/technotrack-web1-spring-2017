@@ -1,0 +1,33 @@
+{% extends 'core/base.html' %}
+
+{% block title %} Home page {% endblock %}
+
+{% block navigate %}
+    <li class="active">Главная</li>
+{% endblock %}
+
+
+{% block content %}
+    <div class="col-lg-8 col-lg-offset-1">
+        <h4> <br>
+            <p><i>Статистика:</i></p>
+            <p> Всего блогов: {{ view.totallyBlogs |default:"0" }}</p>
+            <p>Всего постов: {{ view.totallyPosts |default:"0" }} </p>
+           <p> Всего комментариев: {{ view.totallyComments |default:"0"}} </p>
+        </h4>
+    </div>
+    <div  class="col-lg-8 col-lg-offset-1"><h2> <a href="{% url "blogs:blog_list"%}"> Все блоги </a> </h2><br/></div>
+    <div  class="col-lg-8 col-lg-offset-1">
+    <h3>Последние блоги:</h3>
+    {% for blog in latest_blogs %}
+        <div>
+            <div> <a href="{% url "blogs:one_blog" pk=blog.id %}">{{ blog.title }} </a></div>
+            <div><i>{{ blog.description }}</i></div> <br/>
+        </div>
+    {% endfor %}
+
+    </div>
+
+    {% block footer %}{% endblock %}
+
+{% endblock %}

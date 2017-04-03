@@ -1,0 +1,10 @@
+    div.editLink {
+        font-size: small; position: absolute; right: 2px; top: 5px;
+    }
+    div.col-md-8 {
+        border: 1px dashed black; padding: 1em; margin: 10px; background-color: #EEEEEE
+    }
+    div.col-md-8 div.editLink {display: none}
+    div.col-md-8:hover div.editLink {display: block}
+
+    a.createNewBlog {font-size: 14px; margin-left: 3%}

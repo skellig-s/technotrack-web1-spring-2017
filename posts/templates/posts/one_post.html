@@ -1,26 +1,60 @@
 {% extends 'core/base.html' %}
+{% load widget_tweaks %}
+{% load static %}
+
+{% block stylesheet %}
+    <link href="{% static "footerStyle.css"%}" rel="stylesheet">
+{% endblock %}
 
 {% block title %} Просмотр поста {% endblock %}
 
+
+{% block navigate %}
+    <li><a href="{% url "home" %}">Главная</a></li>
+    <li><a href={% url "blogs:blog_list" %}>Блоги</a></li>
+    <li><a href={% url "blogs:one_blog" pk=post.blog.id %}>{{ post.blog.title }}</a></li>
+    <li class="active">{{ post.title }}</li>
+{% endblock %}
+
+
 {% block content %}
-    <h2><a href="{% url "blogs:one_blog" pk=object.blog.id%}">Blog's page</a> </h2>
-    <p>Title: {{ object.title }}</p>
-    <p>Content: {{ object.content }}</p>
-    <p>created by {{ object.author }}, at {{ object.created_at }}</p>
-    <p>updated at {{ object.updated_at }}</p>
+    <div class="col-md-8 col-lg-offset-1"><h1>Страница поста</h1>
+        {% if post.author == user %}
+            <a href="{% url 'blogs:editPost' pk=post.id blog_id=post.blog.id %}" style="font-size: small; margin-left: 1%">Редактировать </a>
+         {% endif %}
+    </div>
 
+    <div class="col-md-8 col-lg-offset-1">
+        <h2> <strong>{{ post.title }}</strong> </h2>
 
-        <div>
+        <div class="panel panel-default">
+            <div class="panel-body"><article><h3>{{ post.content }}</h3></article> </div>
+            <div class="panel-footer panel-custom">created by {{ post.author }}, at {{ post.created_at }} </div>
+{#        updated at {{ post.updated_at }}</div>#}
+        </div>
+    </div>
+
+        <div class="col-md-8 col-lg-offset-1">
         <h3>Comments:</h3>
-        {% for comment in object.comment_set.all %}
-            <div>{{ comment.description }}
-                <h5><i>created by {{ comment.author }}, at {{ comment.created_at }}</i><br/>
-                <i>rated {{ comment.rate }}</i></h5>
+        {% for comment in post.comment_set.all %}
+            <div class="panel panel-default">
+                <div class="panel-body">{{ comment.description }}</div>
+                <div class="panel-footer">
+                    <p><i>created by {{ comment.author }}, {{ comment.created_at }}</i></p>
+                </div>
             </div>
         {% empty %}
             <i>No comments</i>
         {% endfor %}
         </div>
-
+    <div class="col-md-8 col-lg-offset-1">
+    <form action="{% url "blogs:one_post" pk=post.id blog_id=post.blog.id %}" method="post">
+        Add new:
+        {% csrf_token %}<div class="input-group">
+        {{ form.description|add_class:"form-control"|attr:"rows:4"|attr:"cols:80" }}
+        <input type="submit" value="Добавить" class="btn">
+        </div>
+    </form>
+    </div>
 
 {% endblock %}

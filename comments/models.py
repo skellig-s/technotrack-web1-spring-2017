@@ -13,3 +13,11 @@ class Comment(models.Model):
     rate = models.IntegerField()
     created_at = models.DateField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    def __unicode__(self):
+        return self.description
+
+class Like(models.Model):
+    comment = models.ForeignKey('Comment')
+    author = models.ForeignKey(settings.AUTH_USER_MODEL)
+    created_at = models.DateField(auto_now_add=True)

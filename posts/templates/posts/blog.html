@@ -1,22 +1,66 @@
 {% extends 'core/base.html' %}
+{% load widget_tweaks %}
+{% load static %}
+
+{% block stylesheet %}
+    <link href="{% static "stylesForBlogList.css"%}" rel="stylesheet">
+{% endblock %}
 
 {% block title %} Просмотр блога {% endblock %}
 
-{% block content %}
-    <h2><a href="{% url "blogs:blog_list" %}">All blogs</a> </h2>
-    <p>Title: {{ object.title }}</p>
-    <p>Description: {{ object.description }}</p>
-    <p><i>by {{ object.author }}</i></p>
 
-{#    {% if object.post_set.all %}#}
-        <div>
+{% block navigate %}
+    <li><a href="{% url "home" %}">Главная</a></li>
+    <li ><a href={% url "blogs:blog_list" %}>Блоги</a></li>
+    <li class="active">{{ object.title }}</li>
+{% endblock %}
+
+
+{% block content %}
+    <div class="col-lg-8 col-lg-offset-1">
+        <h1>Страница блога <br/>
+        {% if blog.author == user %}
+            <a href="{% url 'blogs:editBlog' pk=blog.id %}" style="font-size: small;">Редактировать </a>
+        {% endif %}
+        </h1>
+
+{#    <div class="col-lg-offset-1">#}
+    <div class="panel panel-default">
+        <div class="panel-heading"><h2>{{ object.title }}</h2></div>
+        <div class="panel-body"> <h4>{{ object.description }} </h4> </div>
+        <div class="panel-footer"><i>by {{ object.author }}</i></div>
+    </div>
+    </div>
+
+        <div class="col-lg-8 col-lg-offset-1">
         <h3>Posts:</h3>
+        <div><a href="{% url 'blogs:newPost' %}">Добавить пост</a> </div>
         {% for post in object.post_set.all %}
+            <div class="col-md-8" id="bloglisting">
             <div><i><a href="{% url "blogs:one_post" blog_id=post.blog.id pk=post.id %}">{{ post.title }}</a></i></div>
+            {% if post.author == user %}
+                <div class="editLink">
+                    <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                    <a href="{% url 'blogs:editPost' pk=post.id blog_id=post.blog.id %}" >Редактировать </a>
+                </div>
+                {% endif %}
+            </div>
         {% empty %}
-            No posts yet
+            <h3>No posts yet</h3>
         {% endfor %}
-        </div>
-{#    {% endif %}#}
+    </div>
+
 
 {% endblock %}
+
+        <div class="col-md-8" id="bloglisting">
+            <div> <a href="{% url "blogs:one_blog" pk=blog.id%}">{{ blog.title }}</a></div>
+            {% if blog.author == user %}
+                <div class="editLink">
+                    <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                    <a href="{% url 'blogs:editBlog' pk=blog.id %}" >  Редактировать </a>
+                </div>
+            {% endif %}
+            <br/>
+            <div><i>{{ blog.description }}</i></div>
+        </div>

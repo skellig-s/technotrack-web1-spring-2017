@@ -1,0 +1,55 @@
+<! DOCKTYPE html>
+{% load static %}
+{% load widget_tweaks %}
+
+<html>
+
+    <head>
+        <meta charset="UTF-8">
+        <title> {%  block title %} {%  endblock %}</title>
+        <link rel="stylesheet" href="{% static "dist/css/bootstrap.min.css" %}">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+
+    <body>
+
+        {% block avatar %}
+             <div align="right" style="float: right">
+                 {% if user.is_authenticated %}
+                     <img src="{{ user.avatar.url }}"  alt = "Картинка" class="img-circle" style="width: 8em">
+{#                     <img src="{{ user.avatar.url }}"  alt = "Картинка" style="border-radius: 50%; padding: 5px; width: 8em"  >#}
+                 {% else %}
+                     <img src="/media/avatars/default.jpg" style="width: 8em" class="img-circle" alt = "Стандартное изображение" > <br/>
+                 {% endif %}
+
+                 <div>Вы вошли как: <i>
+                    {% if user.is_anonymous %}
+                        Гость <br/>
+                        <h4><a href="{% url 'login' %}">Авторизация</a></h4>
+                        <h4><a href="{% url 'registr' %}">Регистрация</a></h4>
+                    {% else %}
+                        {{ user.username }}</i><br/>
+                        <h4><a href="{% url 'logout' %}">Выйти</a></h4>
+                    {% endif %}
+                 </div>
+            </div>
+        {% endblock %}
+
+
+        <h3>
+        {% block navigate %}
+
+        {% endblock %}
+        </h3>
+
+
+        {% block content %} {%  endblock %}
+    </body>
+
+    <footer style="right: 1%; bottom: 5%; position: fixed;">
+        {% block footer %}
+            <a href="{% url "home" %}" style="text-decoration: none">На главную</a>
+        {% endblock %}
+    </footer>
+
+</html>

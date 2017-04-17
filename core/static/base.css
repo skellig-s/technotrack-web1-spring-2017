@@ -1,0 +1,48 @@
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+body {
+  /* Margin bottom by footer height */
+  margin-bottom: 60px;
+}
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 40px;
+  background-color: #f5f5f5;
+}
+
+
+/* Custom page CSS
+-------------------------------------------------- */
+/* Not required for template or sticky footer method. */
+
+.container-foot {
+  width: auto;
+  max-width: 680px;
+  padding: 5px 15px;
+	margin-left: auto;
+	margin-right: auto;
+}
+.container-foot .text-muted {
+  margin: auto;
+}
+
+.offset {
+	overflow: hidden;
+	zoom: 1;
+	margin-bottom: 20px;
+	padding: 0 0 0px 30px;
+	font-size: 11px;
+}
+
+.navbar-nav li:hover {
+	background-color: #000000;
+}
+.navbar-right li:hover {
+	background-color: inherit;
+}

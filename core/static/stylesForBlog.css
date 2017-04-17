@@ -1,0 +1,112 @@
+.editLink {
+    font-size: 11px;
+    position: absolute;
+    right: 2px;
+    top: 5px;
+}
+
+.p-title {
+        font-size: 20px;
+    }
+
+.createNewBlog {
+    font-size: 12px;
+    border: 1px solid #337ab7;
+	border-radius: 3px;
+	padding: 5px 15px;
+	display: inline-block;
+	outline: none;
+	position: relative;
+    /*transition: 0s;*/
+	z-index: 1;
+	color: #337ab7;
+    }
+
+.createNewBlog:after {
+        content: '';
+        position: absolute;
+        z-index: -1;
+        transition-duration: 0.3s ;
+        height: 100%;
+        width: 0%;
+        top: 0;
+        left: 0;
+        background: #337ab7;
+    }
+.createNewBlog:hover {
+        color: #fff;
+        text-decoration: none;
+    }
+.createNewBlog:hover:after
+    {
+        width: 100%;
+    }
+
+
+.mybtn-primary {
+	border: 1px solid #337ab7;
+	border-radius: 3px;
+
+	padding: 5px 15px 8px;
+	display: inline-block;
+	outline: none;
+	position: relative;
+    /*transition: 0s;*/
+	z-index: 1;
+	color: #337ab7;
+}
+.mybtn-primary:after {
+	content: '';
+	position: absolute;
+	z-index: -1;
+    /*transition: all 0s;*/
+    transition-duration: 0.5s ;
+	width: 100%;
+	height: 0%;
+	top: 0;
+	left: 0;
+	background: #337ab7;
+}
+
+.mybtn-primary:hover
+{
+	color: #fff;
+    text-decoration: none;
+}
+
+.mybtn-primary:hover:after
+{
+    height: 100%;
+}
+
+.mybtn-primary span {
+  cursor: pointer;
+  /*display: inline-block;*/
+  position: relative;
+}
+
+.mybtn-primary span:after {
+  content: 'Редактировать';
+    position: absolute;
+    /*display: none;*/
+    opacity: 0;
+  top: 0;
+  right: 0px;
+  /*transition: all 0s;*/
+}
+
+.mybtn-primary:hover span {
+    padding-right: 7em;
+    transition-duration: 0.3s;
+}
+
+.mybtn-primary:hover span:after {
+    /*content: 'Редактировать';*/
+    /*position: absolute;*/
+    top: 0;
+    display: inline;
+    opacity: 1;
+    right: 0;
+    transition-delay: 0.2s;
+    transition-duration: 0s;
+}

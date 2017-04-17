@@ -1,0 +1,37 @@
+.mybtn-primary {
+	border: 2px solid #337ab7;
+	border-radius: 3px;
+	/*font-family: inherit;*/
+	/*font-size: inherit;*/
+	/*background: none;*/
+
+	padding: 5px 20px 9px;
+	display: inline-block;
+	outline: none;
+	position: relative;
+    transition: all 0.3s;
+	z-index: 1;
+	color: #337ab7;
+}
+.mybtn-primary:after {
+	content: '';
+	position: absolute;
+	z-index: -1;
+    transition: all 0.3s;
+	width: 0%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	background: #337ab7;
+}
+
+.mybtn-primary:hover
+{
+	color: #fff;
+    text-decoration: none;
+}
+
+.mybtn-primary:hover:after
+{
+	width: 100%;
+}

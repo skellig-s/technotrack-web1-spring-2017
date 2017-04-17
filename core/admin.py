@@ -4,7 +4,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 
 from .models import User
-from posts.models import Blog, Post, Category
+from posts.models import Blog, Post, Category, PostLike
 from comments.models import Comment
 
 
@@ -28,3 +28,4 @@ admin.site.register(Blog)
 admin.site.register(Post)
 admin.site.register(Comment)
 admin.site.register(Category)
+admin.site.register(PostLike)

@@ -1,5 +1,7 @@
-{% extends 'core/base.html'%}
+{% extends 'core/base.html' %}
 {% load widget_tweaks %}
+{% load static %}
+
 
 {% block navigate %}
     <li><a href="{% url "home" %}">Главная</a></li>
@@ -8,23 +10,30 @@
 {% endblock %}
 
 {% block content %}
-    <form action="{% url "blogs:newBlog" %}" method="post" class="form-horizontal" >
+    <form method="post" class="container">
         {% csrf_token %}
-        {% if form.errors %}
+         {% if form.errors %}
             {{ form.errors }}
         {% endif %}
-{#        {{ form.as_p }}#}
-        {% for field in form %}
         <div class="form-group">
-            <label class="col-sm-2 control-label">{{ field.label }}</label>
-            <div class="col-md-8">
-                {{ field|add_class:"form-control" }}
-            </div>
+            <label class="control-label">{{ form.title.label }}</label>
+            <div>{{ form.title|add_class:"form-control" }} </div>
+            <label class="control-label">{{ form.description.label }}</label>
+            <div>{{ form.description|add_class:"form-control" }} </div>
+            <label class="control-label">{{ form.categories.label }}</label>
+            <div>{{ form.categories|add_class:"js-example-basic-multiple form-control"}} </div>
         </div>
-        {% endfor %}
-
-        <div class="container">
-        <input type="submit" class="btn btn-default" value="Создать">
-            </div>
+    <div>
+        <input type="submit" class="btn btn-default" value="Сохранить изменения" >
+    </div>
     </form>
+{% endblock %}
+
+
+{% block jsripts %}
+    <script src="{% static "js/select2.min.js" %}"></script>
+{% endblock %}
+
+{% block stylesheet %}
+    <link href="{% static "select2.min.css"%}" rel="stylesheet">
 {% endblock %}

@@ -3,12 +3,15 @@ from django.contrib.auth.decorators import login_required
 from django.conf.urls import url, include
 from.views import *
 from comments.views import PostDetail
+from django.views.decorators.csrf import csrf_exempt
 
 
 urlpatterns = [
     url(r'^$', BlogList.as_view(), name="blog_list"),
     url(r'^(?P<pk>\d+)/$', BlogView.as_view(), name="one_blog"),
     url(r'^(?P<blog_id>\d+)/(?P<pk>\d+)/$', PostDetail.as_view(), name="one_post"),
+    url(r'^(?P<blog_id>\d+)/(?P<pk>\d+)/likes/$', PostLikeCountView.as_view(), name="post_likes"),
+    url(r'^posts/likes/$', PostLikeView.as_view(), name="likes"),
 
     url(r'^new/$', login_required(AddBlog.as_view()), name='newBlog'),
     url(r'^(?P<pk>\d+)/edit/$', login_required(EditBlog.as_view()), name='editBlog'),

@@ -1,7 +1,6 @@
 {% extends 'core/base.html' %}
 {% load widget_tweaks %}
 
-{% block avatar %} {% endblock %}
 
 {% block content %}
 <form method="post" class="form-horizontal" enctype="multipart/form-data">
@@ -13,10 +12,13 @@
     <div class="form-group">
         <label class="col-sm-2 control-label">{{ field.label }}</label>
         <div class="col-md-8">
-            {{ field|add_class:"form-control" }}
+{#            {{ field|add_class:"form-control" }}#}
+            {% render_field field class+="form-control" placeholder=field.label%}
         </div>
     </div>
     {% endfor %}
-    <input type="submit" value="Зарегистрироваться" class="btn btn-primary btn-block">
+    <div class="container">
+        <input type="submit" value="Зарегистрироваться" class="btn btn-primary btn-block">
+    </div>
 </form>
 {% endblock %}

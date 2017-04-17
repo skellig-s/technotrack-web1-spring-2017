@@ -4,6 +4,8 @@
 
 {% block stylesheet %}
     <link href="{% static "footerStyle.css"%}" rel="stylesheet">
+    <link href="{% static "stylesForBlog.css"%}" rel="stylesheet">
+    <link href="{% static "comments.css"%}" rel="stylesheet">
 {% endblock %}
 
 {% block title %} Просмотр поста {% endblock %}
@@ -18,43 +20,59 @@
 
 
 {% block content %}
-    <div class="col-md-8 col-lg-offset-1"><h1>Страница поста</h1>
+    <div class="container">
+        <h1>Страница поста</h1>
         {% if post.author == user %}
-            <a href="{% url 'blogs:editPost' pk=post.id blog_id=post.blog.id %}" style="font-size: small; margin-left: 1%">Редактировать </a>
+            <a href="{% url 'blogs:editPost' pk=post.id blog_id=post.blog.id %}" class="createNewBlog"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Редактировать </a>
          {% endif %}
-    </div>
 
-    <div class="col-md-8 col-lg-offset-1">
         <h2> <strong>{{ post.title }}</strong> </h2>
 
         <div class="panel panel-default">
-            <div class="panel-body"><article><h3>{{ post.content }}</h3></article> </div>
-            <div class="panel-footer panel-custom">created by {{ post.author }}, at {{ post.created_at }} </div>
-{#        updated at {{ post.updated_at }}</div>#}
+            <div class="panel-body">
+                <article class="b-article">{{ post.content }}</article>
+            </div>
+            <div class="panel-footer panel-custom">
+                <div class="row">
+                    <div class="col-xs-6">
+                        created by {{ post.author }}, at {{ post.created_at }}
+                    </div>
+                    <div class="col-xs-1 col-xs-offset-5">
+                        <span class="glyphicon glyphicon-heart"></span>  <span class="likecount" data-post-id="{{ post.id }}" data-likes-url="{% url "blogs:post_likes" pk=post.id blog_id=post.blog.id %}">---</span>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
-        <div class="col-md-8 col-lg-offset-1">
+        <div class="container">
         <h3>Comments:</h3>
         {% for comment in post.comment_set.all %}
             <div class="panel panel-default">
                 <div class="panel-body">{{ comment.description }}</div>
                 <div class="panel-footer">
-                    <p><i>created by {{ comment.author }}, {{ comment.created_at }}</i></p>
+                    {% if comment.author.avatar %}
+                        <img src="{{ comment.author.avatar.url }}" class="comment_avatar">
+                    {% endif %}
+                    <i>  {{ comment.author }}, {{ comment.created_at }}</i>
                 </div>
             </div>
         {% empty %}
-            <i>No comments</i>
+            <i>No comments</i><br/><br/>
         {% endfor %}
         </div>
-    <div class="col-md-8 col-lg-offset-1">
-    <form action="{% url "blogs:one_post" pk=post.id blog_id=post.blog.id %}" method="post">
-        Add new:
-        {% csrf_token %}<div class="input-group">
-        {{ form.description|add_class:"form-control"|attr:"rows:4"|attr:"cols:80" }}
-        <input type="submit" value="Добавить" class="btn">
+    {% if user.is_authenticated %}
+        <div class="container">
+        <form action="{% url "blogs:one_post" pk=post.id blog_id=post.blog.id %}" method="post">
+            Add new:
+            {% csrf_token %}<div class="input-group">
+            {{ form.description|add_class:"form-control"|attr:"rows:4"|attr:"cols:100" }}
+            <input type="submit" value="Добавить" class="btn btn-primary">
+            </div>
+        </form>
         </div>
-    </form>
-    </div>
+    {% endif %}
 
 {% endblock %}
+
+{% block jsripts %}<script src="{% static "js/likes.js" %}"></script>{% endblock %}

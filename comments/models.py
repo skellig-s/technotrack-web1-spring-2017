@@ -17,6 +17,7 @@ class Comment(models.Model):
     def __unicode__(self):
         return self.description
 
+
 class Like(models.Model):
     comment = models.ForeignKey('Comment')
     author = models.ForeignKey(settings.AUTH_USER_MODEL)

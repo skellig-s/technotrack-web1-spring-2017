@@ -1,9 +1,11 @@
 # coding: utf-8
-from django.shortcuts import render, get_object_or_404
-from django.views.generic import ListView, DetailView, CreateView, UpdateView
+from django.shortcuts import render, get_object_or_404, HttpResponse
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, View
 from django.shortcuts import resolve_url
 from models import *
 from forms import *
+from django.http import JsonResponse
+import json
 
 
 # Create your views here.
@@ -71,6 +73,10 @@ class EditBlog(UpdateView):
     def get_queryset(self):
         return Blog.objects.filter(author=self.request.user)
 
+    def form_valid(self, form):
+        response = super(EditBlog, self).form_valid(form)
+        return HttpResponse('OK')
+
 
 class AddPost(CreateView):
 
@@ -102,3 +108,45 @@ class EditPost(UpdateView):
 
     def get_queryset(self):
         return Post.objects.filter(author=self.request.user)
+
+
+class PostLikeCountView (View):
+
+    postobj = None
+    likeobjs = None
+
+    def dispatch(self, request, pk = None, blog_id = None, *args, **kwargs):
+        self.postobj = get_object_or_404(Post, pk=pk)
+        self.likeobjs = PostLike.objects.filter(post__id=pk)
+        return super(PostLikeCountView, self).dispatch(request, *args, **kwargs)
+
+    def get(self, request):
+        return HttpResponse(self.likeobjs.count())
+
+    def post(self, request):
+        qs = PostLike.objects.filter(post=self.postobj, author=self.request.user)
+        if not qs:
+            like = PostLike()
+            like.author = self.request.user
+            like.post = self.postobj
+            like.save()
+        else:
+            qs.delete()
+        return HttpResponse(self.postobj.postlike_set.count())
+        # return HttpResponse('')
+
+
+class PostLikeView(View):
+
+    def get(self, request):
+        ids = request.GET.get('ids', '')
+        ids = ids.split(',')
+        print(ids)
+        posts = dict()
+        for i in ids:
+            j = PostLike.objects.filter(post__id=i).count()
+            posts[int(i)] = j
+
+        # posts = Post.objects.filter(id__in=ids).values_list('id', 'postlike')
+
+        return JsonResponse(posts)

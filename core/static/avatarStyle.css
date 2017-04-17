@@ -1,11 +1,11 @@
 .avatarClass {
     border-radius: 50%;
     width: 2em;
-    margin-top: 12px;
+    margin-top: 10px;
     margin-left: 10px;
 }
 .avDefault {
     border-radius: 50%;
-    width: 5em;
+    width: 3em;
     margin-top: 6px;
 }

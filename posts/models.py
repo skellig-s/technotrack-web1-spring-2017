@@ -43,3 +43,12 @@ class Post(models.Model):
 
     def __unicode__(self):
         return self.title
+
+
+class PostLike(models.Model):
+    post = models.ForeignKey('Post')
+    author = models.ForeignKey(settings.AUTH_USER_MODEL)
+    created_at = models.DateField(auto_now_add=True)
+
+    def __unicode__(self):
+        return 'like '+self.post.__unicode__()+' by '+self.author.__str__()

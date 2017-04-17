@@ -1,10 +1,107 @@
     div.editLink {
-        font-size: small; position: absolute; right: 2px; top: 5px;
+        font-size: small;
+        position: absolute;
+        right: 3px;
+        top: 5px;
     }
-    div.col-md-8 {
-        border: 1px dashed black; padding: 1em; margin: 10px; background-color: #EEEEEE
+    div.well {
+        /*margin: 5px;*/
     }
-    div.col-md-8 div.editLink {display: none}
-    div.col-md-8:hover div.editLink {display: block}
 
-    a.createNewBlog {font-size: 14px; margin-left: 3%}
+
+.createNewBlog {
+    font-size: 14px;
+    border: 1px solid #337ab7;
+	border-radius: 3px;
+	padding: 5px 15px;
+	display: inline-block;
+	outline: none;
+	position: relative;
+	z-index: 1;
+	color: #337ab7;
+    }
+
+.createNewBlog:after {
+        content: '';
+        position: absolute;
+        z-index: -1;
+        transition-duration: 0.3s ;
+        transition-delay: 0.2s ;
+        height: 100%;
+        width: 0%;
+        top: 0;
+        left: 0;
+        background: #337ab7;
+    }
+.createNewBlog:hover {
+    transition-delay: 0.2s;
+        color: #fff;
+        text-decoration: none;
+    }
+.createNewBlog:hover:after
+    {
+        width: 100%;
+    }
+
+.mybtn-primary-edit {
+	border: 1px solid #337ab7;
+	border-radius: 3px;
+
+	padding: 5px 15px 8px;
+	display: inline-block;
+	outline: none;
+	position: relative;
+	z-index: 1;
+	color: #337ab7;
+}
+.mybtn-primary-edit:after {
+	content: '';
+	position: absolute;
+	z-index: -1;
+    transition-duration: 0.5s ;
+	width: 100%;
+	height: 0%;
+	top: 0;
+	left: 0;
+	background: #337ab7;
+}
+
+.mybtn-primary-edit:hover
+{
+    transition-delay: 0.2s ;
+	color: #fff;
+    text-decoration: none;
+}
+
+.mybtn-primary-edit:hover:after
+{
+    height: 100%;
+}
+
+.mybtn-primary-edit span {
+  cursor: pointer;
+  position: relative;
+}
+
+.mybtn-primary-edit span:after {
+    content: 'Редактировать';
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    right: 0px;
+
+}
+
+.mybtn-primary-edit:hover span {
+    padding-right: 7em;
+    transition-duration: 0.3s;
+}
+
+.mybtn-primary-edit:hover span:after {
+    top: 0;
+    display: inline;
+    opacity: 1;
+    right: 0;
+    transition-delay: 0.2s;
+    transition-duration: 0s;
+}

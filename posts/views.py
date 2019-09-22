@@ -141,7 +141,7 @@ class PostLikeView(View):
     def get(self, request):
         ids = request.GET.get('ids', '')
         ids = ids.split(',')
-        print(ids)
+        # print(ids)
         posts = dict()
         for i in ids:
             j = PostLike.objects.filter(post__id=i).count()

@@ -2,6 +2,7 @@ $(document).ready(
 
     function() {
 
+        // $('select').select2();
         function csrfSafeMethod(method) {
             // these HTTP methods do not require CSRF protection
             return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
@@ -26,7 +27,7 @@ $(document).ready(
                 if (data == 'OK') {
                     location.reload();
                 }
-                form.html(data);
+                form.replaceWith(data);
             });
             return false;
         });

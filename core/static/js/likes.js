@@ -8,7 +8,7 @@ $(document).ready( function () {
             ids.push($(this).data('post-id'));
         });
 
-        $.getJSON('/blogs/posts/likes/', {ids: ids.join(',')}, function (data) {
+        $.getJSON('/blogs/posts/likes/', {ids: ids.join(',')}, function (data) { // change url
             for (var i in data) {
                 $('.likecount[data-post-id='+i+']').html(data[i]);
             }
